@@ -52,7 +52,7 @@ class apparmor(object):
             token = c_ulong(token)
         ret = _func(subprofile, token)
         if ret == 0:
-            return token
+            return token.value
         elif ret == -1:
             raise OSError(self._get_last_error())
 
