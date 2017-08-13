@@ -63,9 +63,12 @@ class apparmor(object):
         return self.change_hat(None, token=token)
 
     def change_profile(self, profile):
+        """
+        Attempts to perform an irreversible transition to a named profile
+        """
         _func = self._lib.aa_change_profile
         _func.restype = c_int
-        profile_string = c_char_ptr(profile)
+        profile_string = c_char_p(profile)
         ret = _func(profile_string)
         if ret < 0:
             raise OSError(self._get_last_error())
