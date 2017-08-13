@@ -62,6 +62,14 @@ class apparmor(object):
         """
         return self.change_hat(None, token=token)
 
+    def change_profile(self, profile):
+        _func = self._lib.aa_change_profile
+        _func.restype = c_int
+        profile_string = c_char_ptr(profile)
+        ret = _func(profile_string)
+        if ret < 0:
+            raise OSError(self._get_last_error())
+
     @contextmanager
     def jail(self, hat):
         """
